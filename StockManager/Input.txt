@@ -1,0 +1,5 @@
+"Andritz AG": 68.00
+"Zumtobel": 24.61
+"VOEST Alpine": 33.88
+"Telekom Austria": 10.34
+"OMV": 31.90

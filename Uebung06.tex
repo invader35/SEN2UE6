@@ -1,0 +1,117 @@
+\documentclass[a4paper,oneside,openany]{tufte-book}
+\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{microtype} % Improves character and word spacing
+\usepackage{booktabs} % Better horizontal rules in tables
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{caption}
+
+\makeatletter% since we're using commands with @ in their name
+
+\let\origappendix\appendix% save a copy of the original meaning of \appendix
+\renewcommand{\appendix}{%
+  \origappendix% do all the original \appendix stuff
+  \titlecontents{chapter}%
+    [0em] % distance from left margin
+    {\vspace{1.5\baselineskip}\begin{fullwidth}\LARGE\rmfamily\itshape} % above (global formatting of entry)
+    {\hspace*{0em}\appendixname~\thecontentslabel: } % before w/label (label = ``2'')
+    {\hspace*{0em}} % before w/o label
+    {\rmfamily\upshape\qquad\thecontentspage} % filler + page (leaders and page num)
+    [\end{fullwidth}] % after
+  \titleformat{\chapter}%
+    [display]% shape
+    {\relax\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\begin{fullwidth}}{}}% format applied to label+text
+    {\itshape\huge Anhang~\thechapter}% label
+    {0pt}% horizontal separation between label and title body
+    {\huge\rmfamily\itshape}% before the title body
+    [\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\end{fullwidth}}{}]% after the title body
+  \setcounter{secnumdepth}{0}% ``number'' the appendices
+  \renewcommand{\thefigure}{\@arabic\c@figure}% define \thefigure to use only the figure number (1), not A.1
+  \renewcommand{\thetable}{\@arabic\c@table}%
+  %
+  % Add any other special appendix-related code here.
+  %
+}
+\makeatother% restore the special meaning of @
+
+\morefloats
+\author{Schett Matthias}
+\title{SEN-\"{U}bung 06}
+
+\begin{document}
+
+\definecolor{gray}{rgb}{0.9,0.9,0.9} % background color for the listings
+
+\lstset{language=[Visual]Basic, morekeywords={param, local}, breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left} % standard listing settings
+
+\frontmatter
+
+\maketitle
+\tableofcontents
+\mainmatter
+
+\chapter{Aufgabe 1}\label{chap:Auf1}
+
+\section{L\"{o}sungsidee}
+
+Die Realisierung erfolgt mittels der Klassen Stock\sidenote{Zur Verwaltung einer einzelnen Aktie mit Namen und den benötigten Werten} und StockMarket\sidenote{Zur Verwaltung einer Sammlung von Aktien}.
+Die Stock Klasse besitzt für jeden Member\sidenote{std::string mStockName\\double mAcutalSharePrice;\\double mDayBeforeSharePrice;\\double mHighestSharePrice;\\double mLowestSharePrice;\\double mStockChangeRate;\\}
+eine Getter und eine Setter Methode. Zusätzlich exisitiert noch die calcNewValuesOnChangeRate(double changeRate); Methode. Mit deren Hilfe werden alle Memberwerte neu berrechnet.
+Die StockMarket Klasse speichert ihre Aktien in einer StockCollection\sidenote{Aktuell ein typedef von std::vector}, darin befinden sich StockEntries\sidenote{typedef der Stock Klasse}.
+Um neue Aktien hinzuzufügen, steht die readStocks(std::istream \&istream) Methode bereit, mit deren Hilfe die Scanner Klasse Aktien einliest. Bei einem Fehler im Input Stream wird eine exception mit <Unknown format> geworfen.
+Die Simulation erfolgt über die Nicht Klassenfunktion simulateStockMarket(StockMarket \&market, size\_t numOfDaysToSimulate);\sidenote{Ruft in einer Iteration für jede enthaltene Stock in einem StockMarket die calcNewValuesOnChangeRate, numOfDaysToSimulate mal auf}
+Die Ausgabe erfolgt schließlich der vorgegebenen Tabellenform.
+
+Der Quellcode findet sich im Anhang ab \nameref{chap:AAuf1}
+
+\section{Testf\"{a}lle}\label{sec:TestA1}
+
+\lstinputlisting[caption=Input für Testfall 1]{StockManager/Input.txt}
+\newpage
+\begin{fullwidth}
+\lstinputlisting[caption=Test Ausgabe]{StockManager/OutputA1.txt}
+\end{fullwidth}
+
+\chapter{Aufgabe 2}
+
+\section{L\"{o}sungsidee}
+
+Die Werte werden mittels der Extract Funktion in zwei Iterationen extrahiert, die erste geht über alle Aktien und die zweite über alle gepseicherten Werte in der Collection in der Stock Klasse.
+Die  Ausgabe erfolgt anschließend in einer Iteration über die neue Collection und durch Ausgae des Aktiennamens und der Anzahl an Elementen innerhalb der gefilterten Werte Collection.
+Der Quellcode wurde aus \nameref{chap:Auf1} übernommen und mit den Methoden 
+  \begin{itemize}
+    \item StockCollection Extract(StockCollection::iterator begin, StockCollection::iterator end);
+    \item void printExtracted(StockCollection extractedValues, std::ostream \&os);
+    \item void extractAndPrint(std::ostream \&os);
+  \end{itemize}
+erweitert. 
+
+Daher befindet sich der Quellcode auch hier im Anhang ab \nameref{chap:AAuf1}
+
+\section{Testf\"{a}lle}
+
+Der Input ist der selbe wie in Abschnitt \nameref{sec:TestA1} von \nameref{chap:Auf1}.
+
+\lstinputlisting[caption=Test Ausgabe]{StockManager/OutputA2.txt}
+
+\backmatter
+
+\appendix
+
+\setboolean{@mainmatter}{true}
+\chapter{Aufgabe 1}\label{chap:AAuf1}
+\begin{fullwidth}
+\lstinputlisting[caption=Header der Stock Klasse]{StockManager/Stock.h}
+\lstinputlisting[caption=Implementierung der Stock Klasse]{StockManager/Stock.cpp}
+\lstinputlisting[caption=Header der StockMarket Klasse]{StockManager/StockMarket.h}
+\lstinputlisting[caption=Implementierung der StockMarket Klasse]{StockManager/StockMarket.cpp}
+\lstinputlisting[caption=Testtreiber]{StockManager/Main.cpp}
+\end{fullwidth}
+
+\end{document}

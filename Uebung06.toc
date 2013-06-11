@@ -1,0 +1,11 @@
+\select@language {german}
+\contentsline {chapter}{Aufgabe 1}{3}{chapter*.2}
+\contentsline {section}{L\"{o}sungsidee}{3}{section*.3}
+\contentsline {section}{Testf\"{a}lle}{3}{section*.4}
+\contentsline {chapter}{Aufgabe 2}{5}{chapter*.5}
+\contentsline {section}{L\"{o}sungsidee}{5}{section*.6}
+\contentsline {section}{Testf\"{a}lle}{5}{section*.7}
+\ttl@change@i {\@ne }{chapter}{0em}{\vspace {1.5\baselineskip }\begin {fullwidth}\LARGE \rmfamily \itshape }{\hspace *{0em}\appendixname ~\thecontentslabel : }{\hspace *{0em}}{\rmfamily \upshape \qquad \thecontentspage }\relax 
+\ttl@change@v {chapter}{}{}{\end {fullwidth}}\relax 
+\contentsline {chapter}{\numberline {A}Aufgabe 1}{6}{appendix.A}
+\contentsfinish 

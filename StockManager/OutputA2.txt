@@ -1,0 +1,5 @@
+Andritz AG:	333
+VOEST Alpine:	316
+Telekom Austria:	285
+OMV:	54
+Zumtobel:	19
